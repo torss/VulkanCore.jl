@@ -1,5 +1,5 @@
 using VulkanCore
-using Base.Test
+using Test
 
 const api = vk.api
 
@@ -8,13 +8,13 @@ err = api.VkResult(0)
 toversion(version::Cuint) = VersionNumber(version >> 22,  (version >> 12) & 0x3ff, version & 0xfff)
 
 
-count = Ref{Cuint}(0)
+count = Ref{UInt32}(0) # Ref{Cuint}(0)
 # Scan layers
 err = api.vkEnumerateInstanceLayerProperties(count, C_NULL)
-assert(err == api.VK_SUCCESS)
-global_layer_properties = Array{api.VkLayerProperties}(count[])
+@assert(err == api.VK_SUCCESS)
+global_layer_properties = Array{api.VkLayerProperties}(undef, count[])
 err = api.vkEnumerateInstanceLayerProperties(count, global_layer_properties)
-assert(err == api.VK_SUCCESS)
+@assert(err == api.VK_SUCCESS)
 
 
 
@@ -62,7 +62,7 @@ println(instance)
 gpu_count = Ref{Cuint}(0)
 err = api.vkEnumeratePhysicalDevices(instance[], gpu_count, C_NULL)
 println(err)
-devices = Array{api.VkPhysicalDevice}(gpu_count[])
+devices = Array{api.VkPhysicalDevice}(undef, gpu_count[])
 
 err = api.vkEnumeratePhysicalDevices(instance[], gpu_count, devices)
 
@@ -71,7 +71,7 @@ println(err)
 deviceprops = Ref{api.VkPhysicalDeviceProperties}()
 err = api.vkGetPhysicalDeviceProperties(devices[], deviceprops)
 
-println(err)
+show(err)
 
 function Base.show(io::IO, pdsp::api.VkPhysicalDeviceSparseProperties)
 	println(io, "Physical device Sparse Properties: ")
@@ -99,18 +99,18 @@ limitshow(x) = x
 
 function Base.show(io::IO, pdl::api.VkPhysicalDeviceLimits)
 	println(io, "Physical Device Limits: ")
-	for name in fieldnames(pdl)
+	for name in fieldnames(typeof(pdl))
 		println(io, "    ", name, " ", limitshow(getfield(pdl, name)))
 	end
 end
 
 
 
-println(deviceprops[])
+println(typeof(deviceprops[]))
 queue_count = Ref{Cuint}(0)
 
 api.vkGetPhysicalDeviceQueueFamilyProperties(devices[], queue_count, C_NULL)
-queueprops = Array{api.VkQueueFamilyProperties}(queue_count[])
+queueprops = Array{api.VkQueueFamilyProperties}(undef, queue_count[])
 println(queue_count[])
 api.vkGetPhysicalDeviceQueueFamilyProperties(devices[], queue_count, queueprops)
 println(queueprops)
@@ -124,7 +124,7 @@ api.vkGetPhysicalDeviceFeatures(devices[], devicefeatures)
 
 function Base.show(io::IO, df::api.VkPhysicalDeviceFeatures)
 	println(io, "Physical device features: ")
-	for name in fieldnames(df)
+	for name in fieldnames(typeof(df))
 		println(io, "    ", name, ": ", getfield(df, name) != 1 ? "un" : "", "supported")
 	end
 end
@@ -133,6 +133,7 @@ println(devicefeatures[])
 # app_dev_init(&gpu->dev, gpu);
 # app_dev_init_formats(&gpu->dev);
 
+#=
 include("windowing.jl")
 
 
@@ -191,3 +192,4 @@ if is_unix()
 	err = api.vkCreateXcbSurfaceKHR(instance[], createInfo, C_NULL, surface)
 	println(err)
 end
+=#

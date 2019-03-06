@@ -1,12 +1,14 @@
 ###
 # This script generates julia bindings for different Vulkan versions
 
-using Clang.wrap_c
-using Clang.cindex
+using Clang
+# using Clang: CLANG_INCLUDE
+using Clang.Deprecated.wrap_c
+using Clang.Deprecated.cindex
 
-const LLVM_VERSION = readchomp(`llvm-config --version`)
-const LLVM_LIBDIR  = readchomp(`llvm-config --libdir`)
-const LLVM_INCLUDE = joinpath(LLVM_LIBDIR, "clang", LLVM_VERSION, "include")
+# const LLVM_VERSION = readchomp(`llvm-config --version`)
+# const LLVM_LIBDIR  = readchomp(`llvm-config --libdir`)
+# const LLVM_INCLUDE = joinpath(LLVM_LIBDIR, "clang", LLVM_VERSION, "include")
 
 # Which variable contains the library later onr
 header_library(x) = "libvulkan"
@@ -39,7 +41,7 @@ const VK_VERSIONS = Dict(
 )
 
 # callback to test if a header should actually be wrapped (for exclusion)
-function wrap_header(top_hdr::ASCIIString, cursor_header::ASCIIString)
+function wrap_header(top_hdr::String, cursor_header::String)
   return startswith(dirname(cursor_header), VK_INCLUDE)
 end
 
@@ -51,7 +53,7 @@ function rewriter(ex :: Expr)
     a3 = ex.args[3]
     if isempty(a3.args)
       objname = ex.args[2]
-      return :(typealias $objname Void)
+      return :(const $objname = Void) #### :(typealias $objname Void)
     end
   end
 
@@ -76,11 +78,11 @@ rewriter(A::Array) = [rewriter(a) for a in A]
 rewriter(arg) = arg
 
 function generate_bindings(version = v"1.0")
-  clang_includes = ASCIIString[]
-  push!(clang_includes, LLVM_INCLUDE)
+  clang_includes = String[]
+  push!(clang_includes, Clang.LLVM_INCLUDE)
   push!(clang_includes, VK_INCLUDE)
 
-  clang_extraargs = ASCIIString[]
+  clang_extraargs = String[]
   for extension in VK_EXTENSIONS
     push!(clang_extraargs, "-D")
     push!(clang_extraargs, extension)
@@ -90,10 +92,10 @@ function generate_bindings(version = v"1.0")
 
   run(`$git checkout $git_commit`)
 
-  const wc = wrap_c.init(;
+  wc = wrap_c.init(;
                         headers = VK_HEADERS,
-                        output_file = "api/vk_$(version).jl",
-                        common_file = "api/vk_common_$(version).jl",
+                        output_file = "./api/vk_$(version).jl",
+                        common_file = "./api/vk_common_$(version).jl",
                         clang_includes = clang_includes,
                         clang_args = clang_extraargs,
                         header_wrapped = wrap_header,
@@ -109,13 +111,13 @@ end
 function generate_spirv()
   download("https://www.khronos.org/registry/spir-v/api/1.0/spirv.h", "spirv.h")
 
-  clang_includes = ASCIIString[]
-  push!(clang_includes, LLVM_INCLUDE)
+  clang_includes = String[]
+  push!(clang_includes, Clang.LLVM_INCLUDE)
 
-  const wc = wrap_c.init(;
+  wc = wrap_c.init(;
                         headers = ["./spirv.h"],
-                        output_file = "api/spirv.jl",
-                        common_file = "api/spirv_common_.jl",
+                        output_file = "./api/spirv.jl",
+                        common_file = "./api/spirv_common_.jl",
                         clang_includes = clang_includes,
                         header_library = x->"libspirv",
                         clang_diagnostics = false,

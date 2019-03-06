@@ -2,8 +2,9 @@ module api
 
 # We need our own CEnum, since Base.@enum does not support the full set of functionality of c's enums
 # see JuliaLang/julia#15728
-include("CEnum.jl")
-using .CEnum
+#include("CEnum.jl")
+#using .CEnum
+using CEnum
 
 const version = v"1.0" # Latest branch  see generator.jl for other versions
 

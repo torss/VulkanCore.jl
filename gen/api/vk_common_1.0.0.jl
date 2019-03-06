@@ -201,7 +201,7 @@ const VkCommandPool = Ptr{VkCommandPool_T}
     VK_PIPELINE_CACHE_HEADER_VERSION_RANGE_SIZE = 1,
     VK_PIPELINE_CACHE_HEADER_VERSION_MAX_ENUM = 2147483647,
 )
-@cenum(VkResult,
+@cenum(VkResult{Int32},
     VK_SUCCESS = 0,
     VK_NOT_READY = 1,
     VK_TIMEOUT = 2,

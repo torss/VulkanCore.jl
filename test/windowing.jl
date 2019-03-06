@@ -1,12 +1,12 @@
 """
 XCB window manager wrapper
-This should go into an own package, best with a highlevel interface abstracting away os 
+This should go into an own package, best with a highlevel interface abstracting away os
 specifics.
 This will be pretty much GLFW in Julia!
 """
 module XCB
 
-@enum(xcb_cw_t, 
+@enum(xcb_cw_t,
  	CW_BACK_PIXMAP = 1,
  	CW_BACK_PIXEL = 2,
  	CW_BORDER_PIXMAP = 4,
@@ -59,6 +59,7 @@ module XCB
 	WINDOW_CLASS_INPUT_ONLY = 2
 )
 
+const Void = Nothing
 const xcb_connection_t = Ptr{Void} # TODO create correct composite type
 const xcb_window_t = UInt32
 const xcb_colormap_t = UInt32
@@ -90,7 +91,7 @@ end
 
 struct xcb_screen_t
 	root::xcb_window_t
-	default_colormap::xcb_colormap_t 
+	default_colormap::xcb_colormap_t
 	white_pixel::UInt32
 	black_pixel::UInt32
 	current_input_masks::UInt32
@@ -128,14 +129,14 @@ function connect(displayname)
 		error("Cannot find a compatible Vulkan installable client driver (ICD).\nExiting ...\n")
 	end
 	connection, err[]
-end	
+end
 
 function xcb_get_setup(connection)
 	ccall((:xcb_get_setup, "libxcb"), Ptr{xcb_setup_t}, (xcb_connection_t,), connection)
 end
 function get_setup(connection)
 	setup = xcb_get_setup(connection)
-	if setup == C_NULL 
+	if setup == C_NULL
 		error("Couldn't get setup")
 	end
 	setup
