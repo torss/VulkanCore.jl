@@ -1,6 +1,7 @@
 # Automatically generated using Clang.jl wrap_c, version 0.0.0
 
 using Compat
+using Base: @kwdef
 
 const VULKAN_H_ = 1
 const VK_VERSION_1_0 = 1
@@ -1169,62 +1170,62 @@ struct VkAllocationCallbacks
     pfnInternalFree::PFN_vkInternalFreeNotification
 end
 
-struct VkPhysicalDeviceFeatures
-    robustBufferAccess::VkBool32
-    fullDrawIndexUint32::VkBool32
-    imageCubeArray::VkBool32
-    independentBlend::VkBool32
-    geometryShader::VkBool32
-    tessellationShader::VkBool32
-    sampleRateShading::VkBool32
-    dualSrcBlend::VkBool32
-    logicOp::VkBool32
-    multiDrawIndirect::VkBool32
-    drawIndirectFirstInstance::VkBool32
-    depthClamp::VkBool32
-    depthBiasClamp::VkBool32
-    fillModeNonSolid::VkBool32
-    depthBounds::VkBool32
-    wideLines::VkBool32
-    largePoints::VkBool32
-    alphaToOne::VkBool32
-    multiViewport::VkBool32
-    samplerAnisotropy::VkBool32
-    textureCompressionETC2::VkBool32
-    textureCompressionASTC_LDR::VkBool32
-    textureCompressionBC::VkBool32
-    occlusionQueryPrecise::VkBool32
-    pipelineStatisticsQuery::VkBool32
-    vertexPipelineStoresAndAtomics::VkBool32
-    fragmentStoresAndAtomics::VkBool32
-    shaderTessellationAndGeometryPointSize::VkBool32
-    shaderImageGatherExtended::VkBool32
-    shaderStorageImageExtendedFormats::VkBool32
-    shaderStorageImageMultisample::VkBool32
-    shaderStorageImageReadWithoutFormat::VkBool32
-    shaderStorageImageWriteWithoutFormat::VkBool32
-    shaderUniformBufferArrayDynamicIndexing::VkBool32
-    shaderSampledImageArrayDynamicIndexing::VkBool32
-    shaderStorageBufferArrayDynamicIndexing::VkBool32
-    shaderStorageImageArrayDynamicIndexing::VkBool32
-    shaderClipDistance::VkBool32
-    shaderCullDistance::VkBool32
-    shaderFloat64::VkBool32
-    shaderInt64::VkBool32
-    shaderInt16::VkBool32
-    shaderResourceResidency::VkBool32
-    shaderResourceMinLod::VkBool32
-    sparseBinding::VkBool32
-    sparseResidencyBuffer::VkBool32
-    sparseResidencyImage2D::VkBool32
-    sparseResidencyImage3D::VkBool32
-    sparseResidency2Samples::VkBool32
-    sparseResidency4Samples::VkBool32
-    sparseResidency8Samples::VkBool32
-    sparseResidency16Samples::VkBool32
-    sparseResidencyAliased::VkBool32
-    variableMultisampleRate::VkBool32
-    inheritedQueries::VkBool32
+@kwdef struct VkPhysicalDeviceFeatures
+    robustBufferAccess::VkBool32 = VK_FALSE
+    fullDrawIndexUint32::VkBool32 = VK_FALSE
+    imageCubeArray::VkBool32 = VK_FALSE
+    independentBlend::VkBool32 = VK_FALSE
+    geometryShader::VkBool32 = VK_FALSE
+    tessellationShader::VkBool32 = VK_FALSE
+    sampleRateShading::VkBool32 = VK_FALSE
+    dualSrcBlend::VkBool32 = VK_FALSE
+    logicOp::VkBool32 = VK_FALSE
+    multiDrawIndirect::VkBool32 = VK_FALSE
+    drawIndirectFirstInstance::VkBool32 = VK_FALSE
+    depthClamp::VkBool32 = VK_FALSE
+    depthBiasClamp::VkBool32 = VK_FALSE
+    fillModeNonSolid::VkBool32 = VK_FALSE
+    depthBounds::VkBool32 = VK_FALSE
+    wideLines::VkBool32 = VK_FALSE
+    largePoints::VkBool32 = VK_FALSE
+    alphaToOne::VkBool32 = VK_FALSE
+    multiViewport::VkBool32 = VK_FALSE
+    samplerAnisotropy::VkBool32 = VK_FALSE
+    textureCompressionETC2::VkBool32 = VK_FALSE
+    textureCompressionASTC_LDR::VkBool32 = VK_FALSE
+    textureCompressionBC::VkBool32 = VK_FALSE
+    occlusionQueryPrecise::VkBool32 = VK_FALSE
+    pipelineStatisticsQuery::VkBool32 = VK_FALSE
+    vertexPipelineStoresAndAtomics::VkBool32 = VK_FALSE
+    fragmentStoresAndAtomics::VkBool32 = VK_FALSE
+    shaderTessellationAndGeometryPointSize::VkBool32 = VK_FALSE
+    shaderImageGatherExtended::VkBool32 = VK_FALSE
+    shaderStorageImageExtendedFormats::VkBool32 = VK_FALSE
+    shaderStorageImageMultisample::VkBool32 = VK_FALSE
+    shaderStorageImageReadWithoutFormat::VkBool32 = VK_FALSE
+    shaderStorageImageWriteWithoutFormat::VkBool32 = VK_FALSE
+    shaderUniformBufferArrayDynamicIndexing::VkBool32 = VK_FALSE
+    shaderSampledImageArrayDynamicIndexing::VkBool32 = VK_FALSE
+    shaderStorageBufferArrayDynamicIndexing::VkBool32 = VK_FALSE
+    shaderStorageImageArrayDynamicIndexing::VkBool32 = VK_FALSE
+    shaderClipDistance::VkBool32 = VK_FALSE
+    shaderCullDistance::VkBool32 = VK_FALSE
+    shaderFloat64::VkBool32 = VK_FALSE
+    shaderInt64::VkBool32 = VK_FALSE
+    shaderInt16::VkBool32 = VK_FALSE
+    shaderResourceResidency::VkBool32 = VK_FALSE
+    shaderResourceMinLod::VkBool32 = VK_FALSE
+    sparseBinding::VkBool32 = VK_FALSE
+    sparseResidencyBuffer::VkBool32 = VK_FALSE
+    sparseResidencyImage2D::VkBool32 = VK_FALSE
+    sparseResidencyImage3D::VkBool32 = VK_FALSE
+    sparseResidency2Samples::VkBool32 = VK_FALSE
+    sparseResidency4Samples::VkBool32 = VK_FALSE
+    sparseResidency8Samples::VkBool32 = VK_FALSE
+    sparseResidency16Samples::VkBool32 = VK_FALSE
+    sparseResidencyAliased::VkBool32 = VK_FALSE
+    variableMultisampleRate::VkBool32 = VK_FALSE
+    inheritedQueries::VkBool32 = VK_FALSE
 end
 
 struct VkFormatProperties
